@@ -183,13 +183,35 @@ export default function Home({ onAnalyze }) {
 
     setLinkLoading(true)
     setShowLinkInput(false)
+    setAnalysisStage('Downloading media...')
 
-    // Simulate downloading and detecting media type
-    setTimeout(() => {
+    try {
+      // Call backend to download video
+      const downloadResponse = await fetch('http://192.168.0.108:8000/api/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: linkInput })
+      })
+
+      if (!downloadResponse.ok) {
+        const error = await downloadResponse.json()
+        throw new Error(error.detail || 'Download failed')
+      }
+
+      const downloadData = await downloadResponse.json()
+      
+      // Detect media type
       const detectedType = detectMediaTypeFromUrl(linkInput)
       setLinkLoading(false)
+      
+      // Analyze with video ID
       handleAnalyze('Link Analysis', detectedType)
-    }, 800)
+    } catch (error) {
+      console.error('Download error:', error)
+      setLinkLoading(false)
+      setShowLinkInput(true)
+      alert('Failed to download: ' + error.message)
+    }
   }
 
   return (
