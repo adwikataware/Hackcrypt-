@@ -1,17 +1,34 @@
+/* stylelint-disable at-rule-no-unknown */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply bg-dark text-text-primary;
+}
+
+/* Smooth transitions */
+@layer components {
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-white text-dark font-semibold rounded-lg transition-smooth hover:bg-gray-100 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 border border-gray-accent text-text-primary rounded-lg transition-smooth hover:bg-dark-secondary active:scale-95;
+  }
+
+  .card {
+    @apply bg-dark-secondary rounded-xl border border-dark-tertiary transition-smooth hover:border-gray-accent;
+  }
 }

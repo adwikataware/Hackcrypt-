@@ -59,9 +59,7 @@ export default function Home({ onAnalysisComplete }) {
       <header className="border-b border-dark-tertiary">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-              <span className="text-dark font-bold text-lg">S</span>
-            </div>
+            <span className="text-3xl">🛡️</span>
             <h1 className="text-xl font-bold text-text-primary">DeepFake Shield</h1>
           </div>
           <p className="text-text-secondary text-sm">Professional Detection Platform</p>
