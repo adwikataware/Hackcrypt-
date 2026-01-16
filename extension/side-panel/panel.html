@@ -33,31 +33,31 @@
       <div class="threat-overview">
         <div class="threat-card">
           <div class="threat-level" id="threatLevel">—</div>
-          <p class="threat-label">Overall Threat</p>
+          <p class="threat-label">⚠️ Threat Level</p>
         </div>
         <div class="confidence-card">
           <div class="confidence-score" id="confidenceScore">—</div>
-          <p class="confidence-label">Confidence</p>
+          <p class="confidence-label">🎯 Confidence</p>
         </div>
       </div>
 
       <div class="metrics">
         <div class="metric-item">
-          <span class="metric-label">Visual</span>
+          <span class="metric-label">👁️ Visual</span>
           <div class="metric-bar">
             <div class="metric-fill" id="visualScore"></div>
           </div>
           <span class="metric-value" id="visualValue">—</span>
         </div>
         <div class="metric-item">
-          <span class="metric-label">Audio</span>
+          <span class="metric-label">🔊 Audio</span>
           <div class="metric-bar">
             <div class="metric-fill" id="audioScore"></div>
           </div>
           <span class="metric-value" id="audioValue">—</span>
         </div>
         <div class="metric-item">
-          <span class="metric-label">Temporal</span>
+          <span class="metric-label">⏱️ Temporal</span>
           <div class="metric-bar">
             <div class="metric-fill" id="temporalScore"></div>
           </div>
@@ -66,7 +66,7 @@
       </div>
 
       <div class="threat-type">
-        <span class="label">Primary Threat:</span>
+        <span class="label">🚨 Threat Type</span>
         <span id="threatType" class="value">—</span>
       </div>
     </div>
@@ -74,6 +74,7 @@
     <div id="error" class="error-message hidden"></div>
   </div>
 
+  <script src="../mockData.js"></script>
   <script src="../utils/api.js"></script>
   <script src="panel.js"></script>
 </body>

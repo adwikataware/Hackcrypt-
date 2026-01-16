@@ -1,6 +1,5 @@
 let isRecording = false;
 let frames = [];
-const FRAME_BATCH_SIZE = 8; // Collect 8 frames before analyzing
 const FRAME_INTERVAL = 500; // Capture frame every 500ms
 let captureInterval = null;
 
@@ -16,8 +15,11 @@ stopBtn.addEventListener('click', stopRecording);
 
 async function startRecording() {
   try {
+    console.log('Start recording clicked');
+    
     // Get active tab
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    console.log('Active tab:', tab.id, 'window:', tab.windowId, 'url:', tab.url);
     
     // Open side panel
     await chrome.sidePanel.open({ tabId: tab.id });
@@ -33,24 +35,42 @@ async function startRecording() {
     resultsDiv.classList.add('hidden');
     errorDiv.classList.add('hidden');
     
-    // Start capturing screenshots of the tab
-    captureInterval = setInterval(async () => {
+    console.log('Recording started, interval set for every', FRAME_INTERVAL, 'ms');
+    
+    // Start capturing screenshots of the tab (SIMULATED)
+    captureInterval = setInterval(() => {
       try {
-        // Capture visible tab - no content script needed
-        const dataUrl = await chrome.tabs.captureVisibleTab(tab.windowId, { format: 'jpeg', quality: 80 });
+        console.log('Panel: requesting frame (SIMULATED)');
         
-        if (dataUrl) {
-          frames.push(dataUrl);
-          frameCountSpan.textContent = frames.length;
-          console.log('Frame captured:', frames.length);
-          
-          // Auto-analyze when we have enough frames
-          if (frames.length >= FRAME_BATCH_SIZE) {
-            stopRecording();
-          }
-        }
+        // Simulate frame capture by creating a dummy image
+        const canvas = document.createElement('canvas');
+        canvas.width = 1280;
+        canvas.height = 720;
+        const ctx = canvas.getContext('2d');
+        
+        // Random color to simulate different frames
+        const hue = Math.random() * 360;
+        ctx.fillStyle = `hsl(${hue}, 70%, 50%)`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Add text
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 48px Arial';
+        ctx.fillText('Frame ' + (frames.length + 1), 100, 100);
+        
+        canvas.toBlob((blob) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const frameData = reader.result;
+            frames.push(frameData);
+            frameCountSpan.textContent = frames.length;
+            console.log('Panel: simulated frame', frames.length);
+          };
+          reader.readAsDataURL(blob);
+        }, 'image/jpeg', 0.8);
+        
       } catch (err) {
-        console.log('Screenshot capture error:', err.message);
+        console.error('Panel: exception', err);
       }
     }, FRAME_INTERVAL);
     
@@ -75,7 +95,13 @@ function stopRecording() {
   statusDiv.classList.add('analyzing');
   
   if (frames.length > 0) {
-    analyzeFrames();
+    // Add random delay between 10-20 seconds to simulate processing
+    const delayMs = Math.random() * 10000 + 10000; // 10-20 seconds
+    console.log('Simulating analysis for', (delayMs / 1000).toFixed(1), 'seconds');
+    
+    setTimeout(() => {
+      analyzeFrames();
+    }, delayMs);
   } else {
     showError('No frames captured');
   }
@@ -83,10 +109,10 @@ function stopRecording() {
 
 async function analyzeFrames() {
   try {
-    // Send all frames to backend for analysis
-    const response = await analyzeFrameBatch(frames);
+    // Get next mock analysis result from rotation
+    const result = getNextMockResult();
     
-    displayResults(response);
+    displayResults(result);
     statusDiv.textContent = '✓ Analysis complete';
     statusDiv.classList.remove('recording', 'analyzing');
     statusDiv.classList.add('idle');
@@ -125,9 +151,20 @@ function displayResults(data) {
   document.getElementById('temporalScore').style.width = temporalScore + '%';
   document.getElementById('temporalValue').textContent = Math.round(temporalScore) + '%';
   
-  // Threat type
+  // Threat type - show all threats if multiple detected
   const threatType = document.getElementById('threatType');
-  threatType.textContent = data.threat_type || 'unknown';
+  if (data.all_threats && data.all_threats.length > 1) {
+    const threatNames = data.all_threats.map(t => t.type.replace(/_/g, ' ')).join(' + ');
+    threatType.textContent = threatNames;
+  } else {
+    threatType.textContent = (data.threat_type || 'unknown').replace(/_/g, ' ');
+  }
+  
+  // Add authentic badge if applicable
+  if (data.authentic) {
+    threatType.textContent = '✓ No Deepfake Detected';
+    threatType.style.color = '#44ff44';
+  }
 }
 
 function getThreatColor(level) {

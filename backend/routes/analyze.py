@@ -25,20 +25,17 @@ def generate_mock_analysis():
     """Generate mock analysis results - replace with real AI model"""
     import random
     
-    threat_levels = ['SAFE', 'LOW', 'MEDIUM', 'HIGH', 'CRITICAL']
-    threat_types = ['none', 'face_swap', 'lip_sync', 'voice_clone', 'audio_sync']
-    
-    confidence = random.uniform(0.6, 0.99)
-    threat_level = random.choice(threat_levels)
+    # Scenario: AI lip-syncing detection
+    # These are realistic scores for detected lip-sync deepfakes
     
     return {
         'success': True,
-        'confidence': confidence,
-        'threat_level': threat_level,
-        'threat_type': random.choice(threat_types),
-        'visual_score': random.uniform(0, 1),
-        'audio_score': random.uniform(0, 1),
-        'temporal_score': random.uniform(0, 1)
+        'confidence': 0.87,  # High confidence in detection
+        'threat_level': 'HIGH',  # Clear threat detected
+        'threat_type': 'lip_sync',  # AI lip-syncing detected
+        'visual_score': 0.92,  # Visual model caught facial anomalies
+        'audio_score': 0.76,  # Audio detected slight sync issues
+        'temporal_score': 0.84,  # Temporal inconsistencies detected
     }
 
 @router.post("/analyze-frames")
