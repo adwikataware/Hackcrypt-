@@ -1,0 +1,69 @@
+===========================================
+MEDIA DOWNLOADER MODULE - INTEGRATION GUIDE
+===========================================
+
+COMPLETED BY: Adwika
+STATUS: ✅ Fully Functional
+DATE: January 16, 2026
+
+MODULE LOCATION:
+  backend/services/media_downloader.py
+
+FUNCTION SIGNATURE:
+  download_video(url: str, max_duration: int = 30) -> Dict[str, Any]
+
+SUPPORTED PLATFORMS:
+  - YouTube (youtube.com, youtu.be)
+  - Twitter/X (twitter.com, x.com)
+  - Instagram (instagram.com)
+  - TikTok (tiktok.com)
+
+RETURNS:
+  {
+    'success': bool,
+    'video_path': str,          # Path to downloaded .mp4
+    'metadata': {
+      'title': str,
+      'uploader': str,
+      'duration': int,
+      'platform': str,
+      'file_size_mb': float
+    },
+    'error': str                # Only if success=False
+  }
+
+USAGE IN DETECTION PIPELINE:
+  
+  from services.media_downloader import download_video
+  
+  result = download_video(video_url)
+  
+  if result['success']:
+      video_path = result['video_path']
+      
+      # YOUR DETECTION CODE HERE:
+      # frames = extract_frames(video_path)
+      # visual_score = analyze_visual(frames)
+      # audio_score = analyze_audio(video_path)
+      # etc...
+      
+      # Cleanup when done
+      os.remove(video_path)
+
+ALREADY INTEGRATED IN:
+  backend/routes/detect.py (line 27-43)
+
+TESTED WITH:
+  ✅ YouTube URLs
+  ✅ File uploads
+  ✅ Error handling
+  ✅ Automatic cleanup
+
+NEXT STEPS FOR DETECTION TEAM:
+  1. Replace mock data in detect.py (line 48-57)
+  2. Add frame extraction (FFmpeg)
+  3. Load ML models
+  4. Run detection pipeline
+  5. Return real results
+
+CONTACT: Adwika
