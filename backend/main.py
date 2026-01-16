@@ -17,10 +17,11 @@ app.add_middleware(
 )
 
 # Import routes
-from routes import detect, download
+from routes import detect, download, analyze
 
 app.include_router(detect.router, prefix="/api", tags=["detection"])
 app.include_router(download.router, prefix="/api", tags=["download"])
+app.include_router(analyze.router, prefix="/api", tags=["analysis"])
 
 @app.get("/")
 def root():
