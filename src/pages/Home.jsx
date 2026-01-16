@@ -39,17 +39,22 @@ export default function Home({ onAnalysisComplete }) {
     setUploadType('url')
 
     try {
-      // Simulate processing delay
-      await new Promise((resolve) => setTimeout(resolve, 3000))
+      // Call backend to download video
+      const downloadResponse = await axios.post('http://192.168.0.108:8000/api/download', {
+        url: url
+      })
 
-      // Generate mock results - use video as default for URLs
-      // In production, backend would analyze the URL and determine type
-      const mockResult = generateMockResults('video')
-      onAnalysisComplete(mockResult, 'video')
+      if (downloadResponse.data.success) {
+        // Generate mock results - use video as default for URLs
+        const mockResult = generateMockResults('video')
+        onAnalysisComplete(mockResult, 'video')
+      } else {
+        throw new Error(downloadResponse.data.error || 'Download failed')
+      }
     } catch (error) {
       console.error('Analysis failed:', error)
       setIsProcessing(false)
-      alert('Analysis failed. Please try again.')
+      alert('Analysis failed: ' + error.message)
     }
   }
 

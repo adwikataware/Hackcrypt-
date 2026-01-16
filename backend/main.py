@@ -10,16 +10,17 @@ app = FastAPI(title="DeepFake Shield API")
 # CORS - Allow frontend to connect
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # Frontend URL
+    allow_origins=["http://localhost:5173", "http://localhost:5174", "http://192.168.0.108:5174"],  # Frontend URLs
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Import routes (we'll create these)
-from routes import detect
+# Import routes
+from routes import detect, download
 
 app.include_router(detect.router, prefix="/api", tags=["detection"])
+app.include_router(download.router, prefix="/api", tags=["download"])
 
 @app.get("/")
 def root():
