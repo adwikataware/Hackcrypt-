@@ -1,0 +1,60 @@
+.artifact-card {
+  background: rgba(17, 24, 39, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid;
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.3s ease;
+}
+
+.artifact-card:hover {
+  background: rgba(17, 24, 39, 0.6);
+  transform: translateX(4px);
+}
+
+.artifact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+.artifact-title {
+  color: #e5e7eb;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  flex: 1;
+}
+
+.severity-badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.severity-badge.severity-high {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.severity-badge.severity-medium {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+}
+
+.severity-badge.severity-low {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+}
+
+.artifact-description {
+  color: #9ca3af;
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.5;
+}

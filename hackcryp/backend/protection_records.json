@@ -1,0 +1,11 @@
+[
+  {
+    "original_filename": "real4.jpg",
+    "protected_filename": "1768617155_real4_protected.jpg",
+    "original_hash": "3770cde93f007256435a70a0c9dc804574d0cc507d3970dc12cd65d6dc4cb079",
+    "protected_hash": "2dc514536274de0f7897e075b501fc03cd7ed5d395ff0f8a8dd9d09b58c6dc28",
+    "protection_timestamp": 1768617155.3968265,
+    "secret_key": 99,
+    "strength": 0.015
+  }
+]
